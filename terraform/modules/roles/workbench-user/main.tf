@@ -53,5 +53,5 @@ resource "google_project_iam_custom_role" "workbench_user" {
 resource "google_project_iam_member" "workbench_user_binding" {
   project = var.project_id
   role    = google_project_iam_custom_role.workbench_user.id
-  member  = "user:usuario@exemplo.com" # Substitua pelo email do usuário
+  member  = var.workbench_user_member
 }

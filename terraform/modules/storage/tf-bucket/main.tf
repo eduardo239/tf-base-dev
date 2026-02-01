@@ -7,7 +7,7 @@ resource "random_id" "bucket_suffix" {
 resource "google_storage_bucket" "terraform_state" {
   name          = "terraform-state-bucket-${random_id.bucket_suffix.hex}"
   location      = "US"
-  force_destroy = true
+  force_destroy = var.force_destroy
 
   uniform_bucket_level_access = true
   public_access_prevention    = "enforced"

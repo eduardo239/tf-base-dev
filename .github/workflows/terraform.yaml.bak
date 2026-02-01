@@ -197,6 +197,7 @@ jobs:
         with:
           name: tfplan-${{ matrix.environment }}
           path: terraform/environments/${{ matrix.environment }}/tfplan
+          retention-days: 1
 
       - name: Cleanup on Failure
         if: always() # Run cleanup even on success to prevent stale locks

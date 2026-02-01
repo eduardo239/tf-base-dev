@@ -42,11 +42,23 @@ jobs:
         working-directory: terraform/environments/${{ inputs.environment }}
         run: terraform init
 
+      - name: Validate Lock ID (prevent command injection)
+        run: |
+          LOCK_ID="${{ inputs.lock_id }}"
+          # Terraform lock IDs are UUIDs: only a-fA-F, 0-9, hyphens; 36 chars
+          if ! echo "$LOCK_ID" | grep -qE '^[a-fA-F0-9-]{36}$'; then
+            echo "❌ Invalid lock_id format. Must be a UUID (e.g. xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)"
+            exit 1
+          fi
+          echo "LOCK_ID=$LOCK_ID" >> $GITHUB_ENV
+
       - name: Force Unlock
         working-directory: terraform/environments/${{ inputs.environment }}
+        env:
+          LOCK_ID: ${{ env.LOCK_ID }}
         run: |
-          echo "🔓 Force unlocking state with Lock ID: ${{ inputs.lock_id }}"
-          terraform force-unlock -force ${{ inputs.lock_id }}
+          echo "🔓 Force unlocking state with Lock ID: $LOCK_ID"
+          terraform force-unlock -force "$LOCK_ID"
           echo "✅ State unlocked successfully"
 
       - name: Verify State

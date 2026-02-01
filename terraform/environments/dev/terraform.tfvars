@@ -1,22 +1,2 @@
-project_id = "app-lastbit-dev"
+project_id = "app-projeto-dev"
 region     = "us-central1"
-# location      = "us-central1-a"
-# environment   = "dev"
-# service_name  = "project-base"
-# repository_id = "meu-repo"
-
-# cpu_limit    = "2"
-# memory_limit = "1Gi"
-
-# min_instances = 1
-# max_instances = 100
-
-# environment_variables = {
-#   ENV       = "development"
-#   LOG_LEVEL = "info"
-# }
-
-# allow_unauthenticated = true
-
-# github_owner = "eduardo239"
-# github_repo  = "project-base"
